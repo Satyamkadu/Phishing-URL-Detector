@@ -1,0 +1,16 @@
+# Python virtual environment
+proPhish/
+venv/
+
+# Python cache
+__pycache__/
+
+# VS Code settings
+.vscode/
+
+# Dataset - (optional, if the file is too large)
+*.csv
+*.xlsx
+
+# Saved Model - (optional, good practice for large models)
+# *.joblib

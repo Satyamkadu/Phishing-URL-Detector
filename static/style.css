@@ -1,0 +1,55 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    text-align: center;
+    margin-top: 50px;
+}
+
+.container {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    display: inline-block;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+/* This is the magic! */
+.result-phishing {
+    color: #D8000C; /* Red */
+    background-color: #FFD2D2;
+    border: 1px solid #D8000C;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.result-legitimate {
+    color: #4F8A10; /* Green */
+    background-color: #DFF2BF;
+    border: 1px solid #4F8A10;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+/* --- Add these new styles --- */
+
+.form-input {
+    font-size: 16px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 300px;
+}
+
+.form-button {
+    font-size: 16px;
+    padding: 10px 15px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.form-button:hover {
+    background-color: #0056b3;
+}

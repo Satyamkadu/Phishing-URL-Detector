@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Phishing URL Detector</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Phishing URL Detector</h1>
+        <p>Enter a URL to check if it's phishing or legitimate.</p>
+        
+        <form action="/predict" method="post">
+            <input type="text" name="url" placeholder="Enter URL here..." class="form-input" required="required">
+            <button type="submit" class="form-button">Check</button>
+        </form>
+    </div>
+</body>
+</html>
