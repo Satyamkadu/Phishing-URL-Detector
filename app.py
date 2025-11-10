@@ -1,15 +1,16 @@
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, jsonify
 import joblib
 from urllib.parse import urlparse
 import numpy as np
-import re # Import regular expressions for IP check
+import re
+from flask_cors import CORS # <-- 1. ADD THIS IMPORT
 
 # --- Create the Flask App ---
 app = Flask(__name__)
+CORS(app) # <-- 2. ADD THIS LINE to allow cross-origin requests
 
 # --- Load the NEW, SIMPLER Trained Model ---
-# --- Load the NEW, SIMPLER Trained Model ---
-model = joblib.load('phishing_detector_model.joblib')
+model = joblib.load('phishing_detector_model.joblib') # Using the 20-feature model
 
 # --- This list defines the features for our NEW model ---
 EXPECTED_FEATURES = [
@@ -59,13 +60,13 @@ def extract_features(url):
 # --- Define Routes ---
 @app.route('/')
 def home():
+    # The main web page still works
     return render_template('index.html')
 
 @app.route('/predict', methods=['POST'])
 def predict():
     url_to_check = request.form['url']
     
-    # Add http:// if no scheme is present, as urlparse needs it
     if not urlparse(url_to_check).scheme:
         url_to_check = "http://" + url_to_check
         
@@ -76,7 +77,11 @@ def predict():
     confidence = result_prob[0][prediction[0]] * 100
     result = "This is a Phishing URL" if prediction[0] == 1 else "This is a Legitimate URL"
     
-    return render_template('result.html', prediction_text=f"{result} ({confidence:.2f}% confidence)", url=request.form['url'])
+    # --- 3. THIS IS THE CRITICAL CHANGE ---
+    # We no longer render an HTML page for the API call.
+    # We return a JSON object, which the extension's JavaScript can read.
+    return jsonify({"prediction_text": f"{result} ({confidence:.2f}% confidence)"})
+    # ------------------------------------
 
 # --- Run the App ---
 if __name__ == '__main__':
