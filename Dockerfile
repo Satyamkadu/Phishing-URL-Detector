@@ -1,21 +1,23 @@
-# Step 1: Start with an official Python slim base image
+# Step 1: Start with our secure, patched base image
 FROM python:3.10.13
 
-# Step 2: Set the "working directory" inside the container
+# Step 2: Set the working directory
 WORKDIR /app
 
-# Step 3: Copy the requirements file into the container
+# Step 3: (NEW) Install system-level build tools needed by numpy/scikit-learn
+RUN apt-get update && apt-get install -y build-essential
+
+# Step 4: Copy the requirements file
 COPY requirements.txt .
 
-# Step 4: Install all the Python libraries
+# Step 5: Install all the Python libraries (this will work now)
 RUN pip install -r requirements.txt
 
-# Step 5: Copy all your project files into the container
-# (app.py, model file, templates/, static/, etc.)
+# Step 6: Copy all your project files
 COPY . .
 
-# Step 6: Tell Docker that your app runs on port 5000
+# Step 7: Tell Docker your app runs on port 5000
 EXPOSE 5000
 
-# Step 7: The command to run your app when the container starts
+# Step 8: The command to run your app
 CMD ["flask", "run", "--host=0.0.0.0"]
