@@ -1,4 +1,4 @@
-# Step 1: Start with an official Python base image
+# Step 1: Start with an official Python slim base image
 FROM python:3.10.13
 
 # Step 2: Set the "working directory" inside the container
