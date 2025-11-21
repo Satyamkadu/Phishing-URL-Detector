@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        .stats-box { display: flex; justify-content: space-around; margin-bottom: 20px; }
+        .stat { background: #f0f0f0; padding: 15px; border-radius: 8px; width: 30%; }
+    </style>
+</head>
+<body>
+    <div class="container" style="width: 600px;">
+        <h1>Admin Dashboard</h1>
+        <a href="/logout" style="float: right; color: red;">Logout</a>
+        <div style="clear: both;"></div>
+
+        {% if message %}
+            <h3 style="color: green;">{{ message }}</h3>
+            <a href="/admin">Refresh Stats</a>
+        {% else %}
+            <div class="stats-box">
+                <div class="stat"><h3>Total URLs</h3><p>{{ total }}</p></div>
+                <div class="stat"><h3 style="color:red">Phishing</h3><p>{{ phishing }}</p></div>
+                <div class="stat"><h3 style="color:green">Legit</h3><p>{{ legit }}</p></div>
+            </div>
+        {% endif %}
+
+        <hr>
+
+        <h3>Add New Data Point</h3>
+        <form action="/add-data" method="post">
+            <input type="text" name="url" placeholder="Enter URL" class="form-input" style="width: 70%;" required>
+            <select name="label" class="form-input" style="width: 20%;">
+                <option value="1">Phishing</option>
+                <option value="0">Legitimate</option>
+            </select>
+            <button type="submit" class="form-button" style="margin-top: 10px;">Add & Save</button>
+        </form>
+
+        <hr>
+
+        <h3>Model Management</h3>
+        <p>Warning: Retraining may take a few seconds.</p>
+        <form action="/retrain" method="post">
+            <button type="submit" class="form-button" style="background-color: #ff9800;">Retrain Model Now</button>
+        </form>
+    </div>
+</body>
+</html>
