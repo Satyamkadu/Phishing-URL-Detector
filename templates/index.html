@@ -2,17 +2,95 @@
 <html>
 <head>
     <title>Phishing URL Detector</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        /* Result box styling remains local */
+        #result {
+            display: none; 
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 5px;
+            font-weight: bold;
+            text-align: center;
+        }
+        .result-phishing {
+            background-color: #FFD2D2;
+            color: #D8000C;
+            border: 1px solid #D8000C;
+        }
+        .result-legitimate {
+            background-color: #DFF2BF;
+            color: #4F8A10;
+            border: 1px solid #4F8A10;
+        }
+    </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Phishing URL Detector</h1>
-        <p>Enter a URL to check if it's phishing or legitimate.</p>
-        
-        <form action="/predict" method="post">
-            <input type="text" name="url" placeholder="Enter URL here..." class="form-input" required="required">
-            <button type="submit" class="form-button">Check</button>
-        </form>
+    
+    <nav class="navbar">
+        <a href="/" class="navbar-brand"><span>🛡️</span> SecurePhish</a>
+        <a href="/admin-login" class="form-button" style="background-color: #555; text-decoration: none; padding: 8px 15px; font-size: 14px;">Admin Login</a>
+    </nav>
+
+    <div class="main-content">
+        <div class="container">
+            <h1 style="margin-top: 0;">Phishing Detector</h1>
+            <p style="color: #666; margin-bottom: 25px; line-height: 1.5;">
+                Keep your browsing safe. Paste a URL below to analyze it with our AI engine.
+            </p>
+            
+            <form id="predictionForm" class="home-form">
+                <input type="text" id="urlInput" name="url" placeholder="Paste URL (e.g., http://example.com)" class="form-input" required="required">
+                <button type="submit" id="checkButton" class="form-button">Check Now</button>
+            </form>
+
+            <div id="result"></div>
+        </div>
     </div>
+
+    <footer class="footer">
+        <p>&copy; 2025 SecurePhish. All rights reserved.</p>
+        <p style="font-size: 12px; opacity: 0.7;">Powered by Machine Learning & Flask</p>
+    </footer>
+
+    <script>
+        document.getElementById('predictionForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            var url = document.getElementById('urlInput').value;
+            var resultDiv = document.getElementById('result');
+            var button = document.getElementById('checkButton');
+
+            button.disabled = true;
+            button.innerText = "Analyzing...";
+            resultDiv.style.display = "none";
+
+            var formData = new FormData();
+            formData.append('url', url);
+
+            fetch('/predict', { method: 'POST', body: formData })
+            .then(response => response.json())
+            .then(data => {
+                resultDiv.innerText = data.prediction_text;
+                resultDiv.style.display = "block";
+                resultDiv.className = ''; 
+                if (data.prediction_text.includes("Phishing")) {
+                    resultDiv.classList.add('result-phishing');
+                } else {
+                    resultDiv.classList.add('result-legitimate');
+                }
+                button.disabled = false;
+                button.innerText = "Check Now";
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                resultDiv.innerText = "An error occurred.";
+                resultDiv.style.display = "block";
+                button.disabled = false;
+                button.innerText = "Check Now";
+            });
+        });
+    </script>
+
 </body>
 </html>

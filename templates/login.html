@@ -2,19 +2,50 @@
 <html>
 <head>
     <title>Admin Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <div class="container">
-        <h1>Admin Login</h1>
-        {% if error %}
-            <p style="color: red;">{{ error }}</p>
-        {% endif %}
-        <form action="/admin-login" method="post">
-            <input type="text" name="username" placeholder="Username" class="form-input" required><br><br>
-            <input type="password" name="password" placeholder="Password" class="form-input" required><br><br>
-            <button type="submit" class="form-button">Login</button>
-        </form>
+    
+    <nav class="navbar">
+        <a href="/" class="navbar-brand">
+            <span>🛡️</span> SecurePhish
+        </a>
+        
+        <a href="/" class="form-button" style="background-color: #555; text-decoration: none; padding: 8px 15px; font-size: 14px;">
+            Home
+        </a>
+    </nav>
+
+    <div class="main-content">
+        <div class="container" style="max-width: 400px;">
+            <h1 style="margin-top: 0;">Admin Login</h1>
+            
+            {% if error %}
+                <p style="color: red; background: #ffe6e6; padding: 10px; border-radius: 5px; margin-bottom: 15px;">
+                    {{ error }}
+                </p>
+            {% endif %}
+
+            <form action="/admin-login" method="post" style="margin-top: 20px;">
+                <div style="margin-bottom: 15px;">
+                    <input type="text" name="username" placeholder="Username" class="form-input" required style="width: 100%;">
+                </div>
+                <div style="margin-bottom: 20px;">
+                    <input type="password" name="password" placeholder="Password" class="form-input" required style="width: 100%;">
+                </div>
+                <button type="submit" class="form-button" style="width: 100%;">Login</button>
+            </form>
+            
+            <div style="text-align: center; margin-top: 15px;">
+                <a href="/" style="color: #666; text-decoration: none; font-size: 14px;">&larr; Back to Detector</a>
+            </div>
+        </div>
     </div>
+
+    <footer class="footer">
+        <p>&copy; 2025 SecurePhish. All rights reserved.</p>
+    </footer>
+
 </body>
 </html>

@@ -2,48 +2,83 @@
 <html>
 <head>
     <title>Admin Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <style>
-        .stats-box { display: flex; justify-content: space-around; margin-bottom: 20px; }
-        .stat { background: #f0f0f0; padding: 15px; border-radius: 8px; width: 30%; }
-    </style>
 </head>
 <body>
-    <div class="container" style="width: 600px;">
-        <h1>Admin Dashboard</h1>
-        <a href="/logout" style="float: right; color: red;">Logout</a>
-        <div style="clear: both;"></div>
 
-        {% if message %}
-            <h3 style="color: green;">{{ message }}</h3>
-            <a href="/admin">Refresh Stats</a>
-        {% else %}
-            <div class="stats-box">
-                <div class="stat"><h3>Total URLs</h3><p>{{ total }}</p></div>
-                <div class="stat"><h3 style="color:red">Phishing</h3><p>{{ phishing }}</p></div>
-                <div class="stat"><h3 style="color:green">Legit</h3><p>{{ legit }}</p></div>
+    <nav class="navbar">
+        <a href="/" class="navbar-brand"><span>🛡️</span> SecurePhish</a>
+        <div style="display: flex; gap: 15px; align-items: center;">
+            <a href="/" style="color: #ccc; text-decoration: none; font-size: 14px;">Home</a>
+            <a href="/logout" class="form-button" style="background-color: #D8000C; padding: 8px 15px; font-size: 14px;">Logout</a>
+        </div>
+    </nav>
+
+    <div class="main-content">
+        <div class="container" style="width: 90%; max-width: 800px;">
+            
+            <h1 style="margin-top: 0; margin-bottom: 40px; text-align: center;">Admin Dashboard</h1>
+
+            {% if message %}
+                <div style="background-color: #DFF2BF; padding: 15px; border-radius: 5px; margin-bottom: 20px; border: 1px solid #4F8A10; text-align: center;">
+                    <h3 style="color: #4F8A10; margin: 0;">{{ message }}</h3>
+                    <a href="/admin" style="display: block; margin-top: 10px;">Refresh Stats</a>
+                </div>
+            {% else %}
+                <div class="stats-box">
+                    <div class="stat">
+                        <h3>Total URLs</h3>
+                        <p>{{ total }}</p>
+                    </div>
+                    <div class="stat">
+                        <h3 style="color: #D8000C;">Phishing</h3>
+                        <p style="color: #D8000C;">{{ phishing }}</p>
+                    </div>
+                    <div class="stat">
+                        <h3 style="color: #4F8A10;">Legitimate</h3>
+                        <p style="color: #4F8A10;">{{ legit }}</p>
+                    </div>
+                </div>
+            {% endif %}
+
+            <hr class="section-divider">
+
+            <div style="text-align: center;">
+                <h3>Add New Data Point</h3>
+                <p style="color: #666; margin-bottom: 15px;">Manually add a URL to the training dataset.</p>
+                
+                <form action="/add-data" method="post">
+                    <div class="admin-form-group">
+                        <input type="text" name="url" placeholder="Enter URL (e.g., example.com)" class="form-input" style="flex: 3;" required>
+                        <select name="label" class="form-input" style="flex: 1;">
+                            <option value="1">Phishing</option>
+                            <option value="0">Legitimate</option>
+                        </select>
+                        <button type="submit" class="form-button" style="flex: 0.5;">Add</button>
+                    </div>
+                </form>
             </div>
-        {% endif %}
 
-        <hr>
+            <hr class="section-divider">
 
-        <h3>Add New Data Point</h3>
-        <form action="/add-data" method="post">
-            <input type="text" name="url" placeholder="Enter URL" class="form-input" style="width: 70%;" required>
-            <select name="label" class="form-input" style="width: 20%;">
-                <option value="1">Phishing</option>
-                <option value="0">Legitimate</option>
-            </select>
-            <button type="submit" class="form-button" style="margin-top: 10px;">Add & Save</button>
-        </form>
+            <div style="text-align: center;">
+                <h3>Model Management</h3>
+                <div style="background-color: #fff3cd; padding: 15px; border-radius: 5px; border: 1px solid #ffeeba; margin-bottom: 20px; display: inline-block;">
+                    <strong>Warning:</strong> Retraining takes a few seconds.
+                </div>
+                
+                <form action="/retrain" method="post" class="retrain-form">
+                    <button type="submit" class="retrain-btn">Retrain Model Now</button>
+                </form>
+            </div>
 
-        <hr>
-
-        <h3>Model Management</h3>
-        <p>Warning: Retraining may take a few seconds.</p>
-        <form action="/retrain" method="post">
-            <button type="submit" class="form-button" style="background-color: #ff9800;">Retrain Model Now</button>
-        </form>
+        </div>
     </div>
+
+    <footer class="footer">
+        <p>&copy; 2025 SecurePhish. All rights reserved.</p>
+    </footer>
+
 </body>
 </html>

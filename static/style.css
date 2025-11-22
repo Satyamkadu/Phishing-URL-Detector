@@ -1,55 +1,188 @@
+/* --- GLOBAL STYLES --- */
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: #f4f4f4;
-    text-align: center;
-    margin-top: 50px;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    margin: 0;
+}
+
+/* --- NAVBAR --- */
+.navbar {
+    background-color: #333;
+    color: white;
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.navbar-brand {
+    font-size: 24px;
+    font-weight: bold;
+    text-decoration: none;
+    color: white;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* --- MAIN LAYOUT --- */
+.main-content {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 20px;
 }
 
 .container {
     background-color: #fff;
     border-radius: 8px;
-    padding: 20px;
-    display: inline-block;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    padding: 40px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    text-align: center;
+    width: 100%;
+    max-width: 800px; 
 }
 
-/* This is the magic! */
-.result-phishing {
-    color: #D8000C; /* Red */
-    background-color: #FFD2D2;
-    border: 1px solid #D8000C;
-    padding: 10px;
-    border-radius: 5px;
-}
-
-.result-legitimate {
-    color: #4F8A10; /* Green */
-    background-color: #DFF2BF;
-    border: 1px solid #4F8A10;
-    padding: 10px;
-    border-radius: 5px;
-}
-
-/* --- Add these new styles --- */
-
+/* --- SHARED FORM ELEMENTS --- */
 .form-input {
     font-size: 16px;
-    padding: 10px;
+    padding: 12px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    width: 300px;
+    box-sizing: border-box; 
+    /* Removed fixed width here to prevent conflicts */
 }
 
 .form-button {
     font-size: 16px;
-    padding: 10px 15px;
+    padding: 12px 20px;
     background-color: #007BFF;
     color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    font-weight: bold;
+    transition: background 0.3s;
 }
 
 .form-button:hover {
     background-color: #0056b3;
+}
+
+/* --- HOME PAGE SPECIFIC STYLES (NEW) --- */
+/* This ensures the home page form stays wide and clean */
+/* --- HOME PAGE SPECIFIC STYLES (UPDATED) --- */
+.home-form {
+    display: flex;
+    gap: 10px;
+    justify-content: center; /* Keeps input and button centered */
+    margin-top: 20px;
+}
+
+.home-form .form-input {
+    /* Change: Use a fixed width for desktop, but allow shrinking */
+    width: 100%; 
+    max-width: 450px; /* <--- This prevents it from getting too long */
+    margin-bottom: 0;
+}
+
+.home-form .form-button {
+    width: auto;
+    white-space: nowrap;
+}
+
+/* --- ADMIN DASHBOARD SPECIFIC --- */
+.section-divider {
+    border: 0;
+    height: 1px;
+    background: #e0e0e0;
+    margin: 30px 0;
+}
+
+.stats-box {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+}
+
+.stat {
+    background: #f9f9f9;
+    padding: 20px;
+    border-radius: 10px;
+    width: 200px;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    border: 1px solid #eee;
+}
+
+.stat h3 { margin: 0 0 10px 0; font-size: 18px; color: #555; }
+.stat p { font-size: 28px; font-weight: bold; margin: 0; color: #333; }
+
+/* Admin Forms Layout */
+.admin-form-group {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.admin-form-group input, 
+.admin-form-group select,
+.admin-form-group button {
+    height: 48px;
+    box-sizing: border-box;
+    margin: 0;
+}
+
+.retrain-form { text-align: center; margin-top: 20px; }
+.retrain-btn {
+    background-color: #ff9800;
+    width: auto;
+    padding: 12px 40px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: none;
+    color: white;
+    cursor: pointer;
+}
+.retrain-btn:hover { background-color: #e68900; }
+
+/* --- FOOTER --- */
+.footer {
+    background-color: #333;
+    color: #aaa;
+    text-align: center;
+    padding: 20px;
+    margin-top: auto;
+    font-size: 14px;
+}
+
+/* --- MOBILE RESPONSIVENESS --- */
+@media (max-width: 600px) {
+    .navbar { flex-direction: column; gap: 15px; padding: 15px; }
+    .container { padding: 20px; width: 100%; }
+    .stats-box { flex-direction: column; align-items: center; }
+    .stat { width: 100%; }
+    
+    /* Stack forms on mobile */
+    .admin-form-group, .home-form { flex-direction: column; }
+    .admin-form-group input, .admin-form-group select, .admin-form-group button,
+    .home-form .form-input, .home-form .form-button {
+        width: 100%;
+        margin-bottom: 10px;
+    }
 }
