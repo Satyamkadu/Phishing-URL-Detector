@@ -1,11 +1,11 @@
 # Step 1: Start with our secure, patched base image
-FROM python:3.10.13
+FROM python:3.10.16-slim-bullseye
 
 # Step 2: Set the working directory
 WORKDIR /app
 
 # Step 3: (NEW) Install system-level build tools needed by numpy/scikit-learn
-RUN apt-get update && apt-get install -y build-essential
+RUN apt-get update && apt-get upgrade -y && apt-get install -y --no-install-recommends build-essential && rm -rf /var/lib/apt/lists/*
 
 # Step 4: Copy the requirements file
 COPY requirements.txt .
