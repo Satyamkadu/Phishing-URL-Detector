@@ -1,5 +1,5 @@
 # Step 1: Start with our secure, patched base image
-FROM python:3.10.16-slim-bullseye
+FROM python:3.10.16
 
 # Step 2: Set the working directory
 WORKDIR /app
